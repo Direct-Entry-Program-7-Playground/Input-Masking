@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.tm.InputsTM;
 
 public class MainFormController {
     @FXML
@@ -23,7 +25,7 @@ public class MainFormController {
     private JFXButton btnAdd;
 
     @FXML
-    private TableView tblData;
+    private TableView<InputsTM> tblData;
     @FXML
     private TableColumn colNIC;
     @FXML
@@ -35,6 +37,16 @@ public class MainFormController {
 
     public void initialize() {
 
+        tblData.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("NIC"));
+        tblData.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("creditCardNo"));
+        tblData.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("dob"));
+        tblData.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("mobileNo"));
+
+        tblData.getItems().add(new InputsTM("936245960V", "1111-1111-1111-1111", "25/05/1993", "(+94) 77 258-4568"));
+        tblData.getItems().add(new InputsTM("968855758V", "5568-5569-5588-5558", "12/02/1996", "(+94) 70 268-3578"));
+        tblData.getItems().add(new InputsTM("884466229V", "1596-4856-1257-2586", "04/06/1988", "(+94) 71 153-4586"));
+        tblData.getItems().add(new InputsTM("456813269V", "1235-2568-1596-1257", "30/08/1945", "(+94) 71 358-4568"));
+
         Platform.runLater(() -> {
             tableDataColumAutoSize();
 
@@ -42,7 +54,7 @@ public class MainFormController {
     }
 
     private void tableDataColumAutoSize() {
-        DoubleBinding autoWith = tblData.widthProperty().divide(4);
+        DoubleBinding autoWith = tblData.widthProperty().subtract(4).divide(4);
         colNIC.prefWidthProperty().bind(autoWith);
         colCC.prefWidthProperty().bind(autoWith);
         colDoB.prefWidthProperty().bind(autoWith);
